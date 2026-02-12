@@ -111,8 +111,8 @@ if not headers_only
 			install_dir: get_option('libdir'),
 		)
 	endforeach
-endif
 
-libzinnia = dependency('zinnia', static: true)
-libc_deps += libzinnia
-rtld_deps += libzinnia
+	libzinnia = dependency('zinnia')
+	rtld_deps += libzinnia
+	libc_deps += libzinnia
+endif

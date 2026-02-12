@@ -11,20 +11,18 @@
 #include <sys/ioctl.h>
 #include <sys/stat.h>
 
-#include <zinnia/log.h>
+#include <zinnia/system.h>
 
 namespace mlibc {
 
 [[noreturn]] void sys_exit(int status) {
 	// TODO
-	zn_panic(ZN_ERR_UNSUPPORTED);
+	sys_libc_panic();
 	__builtin_trap();
 }
 
-int sys_write(int fd, const void *buf, size_t count, ssize_t *bytes_written) {
-	zn_panic(ZN_ERR_UNSUPPORTED);
-}
+int sys_write(int fd, const void *buf, size_t count, ssize_t *bytes_written) { sys_libc_panic(); }
 
-int sys_clock_get(int clock, time_t *secs, long *nanos) { zn_panic(ZN_ERR_UNSUPPORTED); }
+int sys_clock_get(int clock, time_t *secs, long *nanos) { sys_libc_panic(); }
 
 } // namespace mlibc

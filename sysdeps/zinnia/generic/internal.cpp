@@ -9,7 +9,8 @@
 #include <syslog.h>
 
 #include <zinnia/archctl.h>
-#include <zinnia/log.h>
+#include <zinnia/system.h>
+#include <zinnia/thread.h>
 
 namespace mlibc {
 
@@ -20,13 +21,13 @@ void sys_libc_log(const char *message) {
 
 [[noreturn]] void sys_libc_panic() {
 	sys_libc_log("mlibc panic!");
-	zn_panic((zn_status_t)1);
+	zn_thread_exit();
 	__builtin_unreachable();
 }
 
 int sys_tcb_set(void *pointer) {
 #if defined(__x86_64__)
-	return zn_archctl(ZN_ARCHCTL_SET_FSBASE, (size_t)pointer);
+	return zn_archctl(ZN_ARCHCTL_SET_FSBASE, pointer);
 #elif defined(__aarch64__)
 	uintptr_t thread_data = reinterpret_cast<uintptr_t>(pointer) + sizeof(Tcb) - 0x10;
 	asm volatile("msr tpidr_el0, %0" ::"r"(thread_data));
