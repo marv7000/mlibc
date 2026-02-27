@@ -10,6 +10,5 @@
 /* Zinnia specific auxvector entries. */
 
 #define AT_INIT_HANDLE 0x1000
-#define AT_POSIX_HANDLE 0x1001
 
 #endif /* _ABIBITS_AUXV_H */

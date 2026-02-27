@@ -112,7 +112,7 @@ if not headers_only
 		)
 	endforeach
 
-	libzinnia = dependency('zinnia')
-	rtld_deps += libzinnia
-	libc_deps += libzinnia
+	zinnia_headers = dependency('zinnia')
+	rtld_deps += zinnia_headers
+	libc_deps += zinnia_headers
 endif
