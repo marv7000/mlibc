@@ -5,6 +5,7 @@
 #include <bits/ensure.h>
 #include <mlibc/allocator.hpp>
 #include <mlibc/debug.hpp>
+#include <mlibc/environment.hpp>
 
 #include <frg/string.hpp>
 #include <frg/vector.hpp>
@@ -100,6 +101,8 @@ void unassign_variable(frg::string_view name) {
 
 } // anonymous namespace
 
+namespace mlibc {
+
 char *getenv(const char *name) {
 	auto k = find_environ_index(name);
 	if(k == size_t(-1))
@@ -110,8 +113,6 @@ char *getenv(const char *name) {
 	__ensure(s != size_t(-1));
 	return const_cast<char *>(view.data() + s + 1);
 }
-
-namespace mlibc {
 
 int putenv(char *string) {
 	frg::string_view view{string};
@@ -131,6 +132,10 @@ int putenv(char *string) {
 } // namespace mlibc
 
 #if __MLIBC_POSIX_OPTION
+
+char *getenv(const char *name) {
+	return mlibc::getenv(name);
+}
 
 int putenv(char *string) {
 	return mlibc::putenv(string);
